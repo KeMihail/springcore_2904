@@ -1,5 +1,6 @@
 package com.epam.spring.impl;
 
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.epam.spring.IEventLogger;
@@ -15,7 +16,7 @@ public class App
 	{
 	}
 
-	public App(final Client client, final IEventLogger eventLogger)
+	private App(final Client client, final IEventLogger eventLogger)
 	{
 		this.client = client;
 		this.eventLogger = eventLogger;
@@ -23,8 +24,9 @@ public class App
 
 	public static void main(final String[] args)
 	{
-		final ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
-		final App app = (App)context.getBean("app");
+		final ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml","spring1.xml");
+		final App app = context.getBean("app",App.class);
+
 		String msg = "Hello 1";
 		app.logEvent(msg);
 	}

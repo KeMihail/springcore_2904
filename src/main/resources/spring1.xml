@@ -1,0 +1,11 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="client" class="com.epam.spring.impl.Client">
+        <constructor-arg index="1" value="Keiko Mihail Olegovich"/>
+        <constructor-arg index="0" value="1"/>
+    </bean>
+
+</beans>

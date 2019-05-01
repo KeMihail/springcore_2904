@@ -5,14 +5,29 @@
 
     <bean id="consoleEventLogger" class="com.epam.spring.impl.ConsoleEventLogger"/>
 
-    <bean id="client" class="com.epam.spring.impl.Client">
+    <!--<bean id="client" name="client mihail" class="com.epam.spring.impl.Client">
         <property name="id" value="1"/>
         <property name="fullName" value="Keiko Mihail"/>
-    </bean>
+    </bean>-->
 
-    <bean id="app" class="com.epam.spring.impl.App">
+    <!--<bean id="client" class="com.epam.spring.impl.Client">
+        <constructor-arg value="1"/>
+        <constructor-arg value="Keiko Mihail Olegovich"/>
+    </bean>-->
+
+   <!-- <bean id="client" class="com.epam.spring.impl.Client">
+        <constructor-arg index="1" value="Keiko Mihail"/>
+        <constructor-arg index="0" value="1"/>
+    </bean>-->
+
+    <!--<bean id="app" class="com.epam.spring.impl.App">
         <property name="client" ref="client"/>
         <property name="eventLogger" ref="consoleEventLogger"/>
+    </bean>-->
+
+    <bean id="app" class="com.epam.spring.impl.App">
+        <constructor-arg ref="consoleEventLogger"/>
+        <constructor-arg ref="client"/>
     </bean>
 
 </beans>

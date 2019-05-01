@@ -5,8 +5,8 @@ import com.epam.spring.IEventLogger;
 
 public class ConsoleEventLogger implements IEventLogger
 {
-	public void logEvent(final String msg)
+	public void logEvent(final Event event)
 	{
-		System.out.println(msg);
+		System.out.println(event);
 	}
 }

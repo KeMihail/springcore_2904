@@ -5,11 +5,15 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.epam.spring.IEventLogger;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 
 public class App
 {
 	private Client client;
 	private IEventLogger eventLogger;
+	private Event event;
 
 
 	public App()
@@ -22,20 +26,25 @@ public class App
 		this.eventLogger = eventLogger;
 	}
 
+	public App(Client client, IEventLogger eventLogger, Event event) {
+		this.client = client;
+		this.eventLogger = eventLogger;
+		this.event = event;
+	}
+
 	public static void main(final String[] args)
 	{
 		final ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml","spring1.xml");
 		final App app = context.getBean("app",App.class);
 
-		String msg = "Hello 1";
-		app.logEvent(msg);
+		app.logEvent(app.getEvent());
 	}
 
 	// call to eventLogger
-	public void logEvent(final String msg)
+	public void logEvent(final Event event)
 	{
-		String message = msg.replaceAll(client.getId(), client.getFullName());
-		eventLogger.logEvent(message);
+		event.setMessage(event.getMessage().replaceAll(client.getId(), client.getFullName()));
+		eventLogger.logEvent(event);
 	}
 
 	public Client getClient()
@@ -56,5 +65,13 @@ public class App
 	public IEventLogger getEventLogger()
 	{
 		return eventLogger;
+	}
+
+	public Event getEvent() {
+		return event;
+	}
+
+	public void setEvent(Event event) {
+		this.event = event;
 	}
 }

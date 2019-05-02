@@ -6,71 +6,66 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.epam.spring.IEventLogger;
 
-
-public class App
-{
-	private Client client;
-	private IEventLogger eventLogger;
-	private Event event;
+import java.util.Map;
 
 
-	public App()
-	{
-	}
+public class App {
+    private Client client;
+    private IEventLogger eventLogger;
+    private Event event;
+    private Map<EvenType, IEventLogger> loggers;
 
-	private App(final Client client, final IEventLogger eventLogger)
-	{
-		this.client = client;
-		this.eventLogger = eventLogger;
-	}	
 
-	public App(Client client, IEventLogger eventLogger, Event event) {
-		this.client = client;
-		this.eventLogger = eventLogger;
-		this.event = event;
-	}
+    public App() {
+    }
 
-	public static void main(final String[] args)
-	{
-		final ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
-		final App app = context.getBean("app",App.class);
+    public App(Client client, IEventLogger eventLogger, Event event, Map<EvenType, IEventLogger> loggers) {
+        this.client = client;
+        this.eventLogger = eventLogger;
+        this.event = event;
+        this.loggers = loggers;
+    }
 
-		app.logEvent(app.getEvent());
-		context.close();
-	}
+    public static void main(final String[] args) {
+        final ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
+        final App app = context.getBean("app", App.class);
 
-	// call to eventLogger
-	public void logEvent(final Event event)
-	{
-		event.setMessage(event.getMessage().replaceAll(client.getId(), client.getFullName()));
-		eventLogger.logEvent(event);
-	}
+        app.logEvent(app.getEvent());
+        context.close();
+    }
 
-	public Client getClient()
-	{
-		return client;
-	}
+    // call to eventLogger
+    public void logEvent(final Event event) {
+        event.setMessage(event.getMessage().replaceAll(client.getId(), client.getFullName()));
+        eventLogger = loggers.get(EvenType.ERROR);
+        eventLogger.logEvent(event);
+    }
 
-	public void setClient(final Client client)
-	{
-		this.client = client;
-	}
+    public Client getClient() {
+        return client;
+    }
 
-	public void setEventLogger(final IEventLogger eventLogger)
-	{
-		this.eventLogger = eventLogger;
-	}
+    public void setClient(final Client client) {
+        this.client = client;
+    }
 
-	public IEventLogger getEventLogger()
-	{
-		return eventLogger;
-	}
+    public void setEventLogger(final IEventLogger eventLogger) {
+        this.eventLogger = eventLogger;
+    }
 
-	public Event getEvent() {
-		return event;
-	}
+    public IEventLogger getEventLogger() {
+        return eventLogger;
+    }
 
-	public void setEvent(Event event) {
-		this.event = event;
-	}
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+
+    public void setLoggers(Map<EvenType, IEventLogger> loggers) {
+        this.loggers = loggers;
+    }
 }

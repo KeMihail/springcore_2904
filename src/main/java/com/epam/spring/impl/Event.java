@@ -1,6 +1,7 @@
 package com.epam.spring.impl;
 
 
+import javax.swing.event.HyperlinkEvent;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -9,6 +10,7 @@ public class Event {
     private Integer id;
     private String message;
     private LocalDateTime date;
+    private EvenType type;
 
     public Event() {
     }
@@ -37,6 +39,18 @@ public class Event {
 
     public void setDate(LocalDateTime date) {
         this.date = date;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public EvenType getType() {
+        return type;
+    }
+
+    public void setType(EvenType type) {
+        this.type = type;
     }
 
     @Override

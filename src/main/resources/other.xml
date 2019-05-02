@@ -16,10 +16,16 @@
         </property>
     </bean>
 
-    <bean id="app" class="com.epam.spring.impl.App">
+    <bean id="app" name="app" class="com.epam.spring.impl.App">
         <constructor-arg ref="logger"/>
         <constructor-arg ref="client"/>
         <constructor-arg ref="event"/>
+        <constructor-arg>
+            <map>
+                <entry key="INFO" value-ref="cacheFileEventLogger"/>
+                <entry key="ERROR" value-ref="сombinedEventLogger"/>
+            </map>
+        </constructor-arg>
     </bean>
 
 </beans>

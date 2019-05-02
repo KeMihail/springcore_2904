@@ -1,12 +1,10 @@
 package com.epam.spring.impl;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.epam.spring.IEventLogger;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 
 public class App
@@ -24,7 +22,7 @@ public class App
 	{
 		this.client = client;
 		this.eventLogger = eventLogger;
-	}
+	}	
 
 	public App(Client client, IEventLogger eventLogger, Event event) {
 		this.client = client;
@@ -34,10 +32,11 @@ public class App
 
 	public static void main(final String[] args)
 	{
-		final ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml","spring1.xml");
+		final ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
 		final App app = context.getBean("app",App.class);
 
 		app.logEvent(app.getEvent());
+		context.close();
 	}
 
 	// call to eventLogger

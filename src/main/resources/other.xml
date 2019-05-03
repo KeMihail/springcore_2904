@@ -2,10 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:util="http://www.springframework.org/schema/util"
-       xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:c="http://www.springframework.org/schema/c"
-       xsi:schemaLocation="
- 		http://www.springframework.org/schema/beans
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
  		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
  		http://www.springframework.org/schema/util
  		http://www.springframework.org/schema/util/spring-util-3.2.xsd">
@@ -17,38 +14,46 @@
 
     <util:properties id="clientProp" location="classpath:client.properties"/>
 
-      <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-          <property name="locations">
-              <list>
-                  <value>classpath:client.properties</value>
-              </list>
-          </property>
-          <property name="ignoreResourceNotFound" value="true" />
-          <property name="systemPropertiesMode">
-              <util:constant
-                      static-field="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer.SYSTEM_PROPERTIES_MODE_OVERRIDE" />
-          </property>
-      </bean>
-
-
-    <bean id="client" class="com.epam.spring.impl.Client">
-           <constructor-arg index="1" value="${name}"/>
-           <constructor-arg index="0" value="${id}"/>
-    </bean>
-
-    <bean id="event" class="com.epam.spring.impl.Event" scope="prototype">
-        <property name="id" value="1"/>
-        <property name="message" value="Hello 1"/>
-        <property name="date">
-            <bean class="java.time.LocalDateTime" factory-method="now"/>
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:client.properties</value>
+            </list>
+        </property>
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="systemPropertiesMode">
+            <util:constant
+                    static-field="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer.SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
         </property>
     </bean>
 
-    <bean id="app" name="app" class="com.epam.spring.impl.App">
-        <constructor-arg ref="logger"/>
+    <bean id="client" class="com.epam.spring.impl.Client">
+
+        <!-- xml config:-->
+        <!--  <constructor-arg index="1" value="${name}"/>
+          <constructor-arg index="0" value="${id}"/>-->
+    </bean>
+
+    <bean id="datelog" class="java.time.LocalDateTime" factory-method="now"/>
+    <bean id="emptylist" class="java.util.ArrayList"/>
+
+    <bean id="event" class="com.epam.spring.impl.Event" scope="prototype">
+
+        <!--xml config:-->
+       <!-- <property name="id" value="1"/>
+        <property name="message" value="Hello 1"/>
+        <property name="date">
+            <bean class="java.time.LocalDateTime" factory-method="now"/>
+        </property>-->
+    </bean>
+
+    <bean id="app" class="com.epam.spring.impl.App">
+
+        <!-- xml config:-->
+        <!--<constructor-arg ref="logger"/>
         <constructor-arg ref="client"/>
         <constructor-arg ref="event"/>
-        <constructor-arg ref="loggers"/>
+        <constructor-arg ref="loggers"/>-->
 
     </bean>
 

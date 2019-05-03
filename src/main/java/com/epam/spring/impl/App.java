@@ -1,21 +1,30 @@
 package com.epam.spring.impl;
 
-import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
 import com.epam.spring.IEventLogger;
 
 import java.util.Map;
-import java.util.Properties;
+
+import javax.annotation.Resource;
 
 
+@Component
 public class App {
-    private Client client;
-    private IEventLogger eventLogger;
-    private Event event;
-    private Map<EvenType, IEventLogger> loggers;
 
+    @Resource(name = "client")
+    private Client client;
+    @Resource(name = "logger")
+    private IEventLogger eventLogger;
+    @Resource(name = "event")
+    private Event event;
+    @Resource(name = "loggers")
+    private Map<EvenType, IEventLogger> loggers;
 
     public App() {
     }
@@ -31,14 +40,6 @@ public class App {
         final ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
         final App app = context.getBean("app", App.class);
 
-
-        final Properties properties = context.getBean("clientProp",Properties.class);
-        System.out.println(properties);
-
-        final String pr = properties.getProperty("id");
-        System.out.println(pr);
-
-
         app.logEvent(app.getEvent());
         context.close();
     }
@@ -46,7 +47,7 @@ public class App {
     // call to eventLogger
     public void logEvent(final Event event) {
         event.setMessage(event.getMessage().replaceAll(client.getId(), client.getFullName()));
-        eventLogger = loggers.get(EvenType.INFO);
+        eventLogger = loggers.get(EvenType.INFO.toString());
         eventLogger.logEvent(event);
     }
 
@@ -76,5 +77,10 @@ public class App {
 
     public void setLoggers(Map<EvenType, IEventLogger> loggers) {
         this.loggers = loggers;
+    }
+
+    public Map<EvenType, IEventLogger> getLoggers()
+    {
+        return loggers;
     }
 }

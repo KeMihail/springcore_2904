@@ -2,27 +2,38 @@ package com.epam.spring.impl;
 
 import java.util.List;
 
+import javax.annotation.PreDestroy;
+import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+
+@Component
 public class CacheFileEventLogger extends FileEventLogger
 {
+	@Value("10")
 	private Integer cacheSize;
+	@Resource(name = "emptylist")
 	private List<Event> cache;
 
 	@Override
 	public void logEvent(final Event event)
 	{
 
-			if (cache.size() <= cacheSize)
-			{
-				cache.add(event);
-			}
-			else
-			{
-				writeToFile();
-			}
+		if (cache.size() <= cacheSize)
+		{
+			cache.add(event);
+		}
+		else
+		{
+			writeToFile();
+		}
 	}
 
-	public void destroy(){
+	@PreDestroy
+	public void destroy()
+	{
 		writeToFile();
 	}
 
@@ -45,7 +56,9 @@ public class CacheFileEventLogger extends FileEventLogger
 	{
 		this.cache = cache;
 	}
-	private void writeToFile(){
+
+	private void writeToFile()
+	{
 
 		if (!cache.isEmpty())
 		{

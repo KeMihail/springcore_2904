@@ -4,8 +4,16 @@ import com.epam.spring.IEventLogger;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+
+@Component
 public class CombinedEventLogger implements IEventLogger {
 
+    @Resource(name = "loggers")
     private List<IEventLogger> loggers;
 
     @Override

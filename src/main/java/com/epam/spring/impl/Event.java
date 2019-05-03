@@ -1,14 +1,22 @@
 package com.epam.spring.impl;
 
 
-import javax.swing.event.HyperlinkEvent;
 import java.time.LocalDateTime;
-import java.util.Date;
 
+import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+
+@Component
 public class Event {
 
+    @Value("1")
     private Integer id;
+    @Value("Hello 1")
     private String message;
+    @Resource(name = "datelog")
     private LocalDateTime date;
     private EvenType type;
 

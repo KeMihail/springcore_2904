@@ -1,6 +1,8 @@
 package com.epam.spring.impl;
 
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.epam.spring.IEventLogger;
@@ -34,10 +36,10 @@ public class App {
 
     public static void main(final String[] args) {
 
-        /*xml config:*/
-       /* final ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("context.xml");*/
+        final ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
 
-        final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        /*annotation config:*/
+      /*  final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);*/
         final App app = context.getBean("app", App.class);
 
         app.logEvent(app.getEvent());
@@ -47,7 +49,7 @@ public class App {
     // call to eventLogger
     public void logEvent(final Event event) {
         event.setMessage(event.getMessage().replaceAll(client.getId(), client.getFullName()));
-     /*   eventLogger = loggers.get(EventType.INFO.toString());*/
+        eventLogger = loggers.get(EventType.INFO.toString());
         eventLogger.logEvent(event);
     }
 

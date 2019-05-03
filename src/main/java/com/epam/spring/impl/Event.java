@@ -18,7 +18,7 @@ public class Event {
     private String message;
     @Resource(name = "datelog")
     private LocalDateTime date;
-    private EvenType type;
+    private EventType type;
 
     public Event() {
     }
@@ -53,11 +53,11 @@ public class Event {
         return date;
     }
 
-    public EvenType getType() {
+    public EventType getType() {
         return type;
     }
 
-    public void setType(EvenType type) {
+    public void setType(EventType type) {
         this.type = type;
     }
 

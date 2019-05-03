@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class Client
 {
-	@Value("${id}")
+	@Value("1")
 	private String id;
-	@Value("${name}")
+	@Value("Hello 1")
 	private String fullName;
 
 	public Client()

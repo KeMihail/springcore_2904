@@ -1,5 +1,6 @@
 package com.epam.spring.impl;
 
-public enum EvenType {
+public enum EventType
+{
     INFO,ERROR;
 }

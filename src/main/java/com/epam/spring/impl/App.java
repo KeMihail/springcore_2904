@@ -1,10 +1,6 @@
 package com.epam.spring.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.epam.spring.IEventLogger;
@@ -19,17 +15,17 @@ public class App {
 
     @Resource(name = "client")
     private Client client;
-    @Resource(name = "logger")
+    @Resource(name = "cacheFileEventLogger")
     private IEventLogger eventLogger;
     @Resource(name = "event")
     private Event event;
     @Resource(name = "loggers")
-    private Map<EvenType, IEventLogger> loggers;
+    private Map<EventType, IEventLogger> loggers;
 
     public App() {
     }
 
-    public App(Client client, IEventLogger eventLogger, Event event, Map<EvenType, IEventLogger> loggers) {
+    public App(Client client, IEventLogger eventLogger, Event event, Map<EventType, IEventLogger> loggers) {
         this.client = client;
         this.eventLogger = eventLogger;
         this.event = event;
@@ -37,7 +33,11 @@ public class App {
     }
 
     public static void main(final String[] args) {
-        final ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
+
+        /*xml config:*/
+       /* final ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("context.xml");*/
+
+        final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
         final App app = context.getBean("app", App.class);
 
         app.logEvent(app.getEvent());
@@ -47,7 +47,7 @@ public class App {
     // call to eventLogger
     public void logEvent(final Event event) {
         event.setMessage(event.getMessage().replaceAll(client.getId(), client.getFullName()));
-        eventLogger = loggers.get(EvenType.INFO.toString());
+     /*   eventLogger = loggers.get(EventType.INFO.toString());*/
         eventLogger.logEvent(event);
     }
 
@@ -75,11 +75,11 @@ public class App {
         this.event = event;
     }
 
-    public void setLoggers(Map<EvenType, IEventLogger> loggers) {
+    public void setLoggers(Map<EventType, IEventLogger> loggers) {
         this.loggers = loggers;
     }
 
-    public Map<EvenType, IEventLogger> getLoggers()
+    public Map<EventType, IEventLogger> getLoggers()
     {
         return loggers;
     }

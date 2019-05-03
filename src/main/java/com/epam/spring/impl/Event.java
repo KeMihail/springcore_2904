@@ -2,6 +2,7 @@ package com.epam.spring.impl;
 
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import javax.annotation.Resource;
 
@@ -12,11 +13,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class Event {
 
-    @Value("1")
+    //@Value("1")
     private Integer id;
-    @Value("Hello 1")
+    //@Value("Hello 1")
     private String message;
-    @Resource(name = "datelog")
+    //@Resource(name = "datelog")
     private LocalDateTime date;
     private EventType type;
 
@@ -27,6 +28,17 @@ public class Event {
         this.id = id;
         this.message = message;
         this.date = date;
+    }
+
+    public static Boolean isDay(){
+
+        final LocalTime currentTime = LocalTime.now();
+
+        if (currentTime.isBefore(LocalTime.of(8,00,00)) || currentTime.isAfter(LocalTime.of(17,00,00))){
+            return false;
+        }
+
+        return true;
     }
 
     public Integer getId() {

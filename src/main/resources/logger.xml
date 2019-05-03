@@ -6,13 +6,13 @@
     <bean id="consoleEventLogger" class="com.epam.spring.impl.ConsoleEventLogger"/>
 
     <bean id="fileEventLogger" class="com.epam.spring.impl.FileEventLogger" init-method="init">
-        <property name="filename" value="F:\file_logger.txt"/>
+        <property name="filename" value="D:\file_logger.txt"/>
     </bean>
 
     <alias name="cacheFileEventLogger" alias="logger"/>
     <bean id="cacheFileEventLogger" class="com.epam.spring.impl.CacheFileEventLogger" parent="fileEventLogger"
           destroy-method="destroy">
-        <property name="filename" value="F:\file_cache_logger.txt"/>
+        <property name="filename" value="D:\file_cache_logger.txt"/>
         <property name="cacheSize" value="10"/>
         <property name="cache">
             <bean class="java.util.ArrayList"/>

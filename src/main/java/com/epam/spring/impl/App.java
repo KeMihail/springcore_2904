@@ -7,6 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.epam.spring.IEventLogger;
 
 import java.util.Map;
+import java.util.Properties;
 
 
 public class App {
@@ -30,6 +31,14 @@ public class App {
         final ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
         final App app = context.getBean("app", App.class);
 
+
+        final Properties properties = context.getBean("clientProp",Properties.class);
+        System.out.println(properties);
+
+        final String pr = properties.getProperty("id");
+        System.out.println(pr);
+
+
         app.logEvent(app.getEvent());
         context.close();
     }
@@ -37,7 +46,7 @@ public class App {
     // call to eventLogger
     public void logEvent(final Event event) {
         event.setMessage(event.getMessage().replaceAll(client.getId(), client.getFullName()));
-        eventLogger = loggers.get(EvenType.ERROR);
+        eventLogger = loggers.get(EvenType.INFO);
         eventLogger.logEvent(event);
     }
 

@@ -48,7 +48,7 @@
 
     <bean id="app" class="com.epam.spring.impl.App">
 
-        <constructor-arg value="#{ T(Client).isDay() ? fileEventLogger : consoleEventLogger }"/>
+        <constructor-arg ref="cacheFileEventLogger"/>
         <constructor-arg ref="client"/>
         <constructor-arg ref="event"/>
         <constructor-arg ref="loggers"/>
@@ -58,5 +58,7 @@
         <property name="event" value="#{event}"/>
         <property name="loggers" value="#{loggers}"/>-->
     </bean>
+
+    <bean id="loggingAspect" class="com.epam.spring.impl.aspect.LoggingAspect"/>
 
 </beans>

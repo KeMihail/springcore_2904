@@ -7,6 +7,7 @@ import com.epam.spring.IEventLogger;
 @Component
 public class ConsoleEventLogger implements IEventLogger
 {
+	@Override
 	public void logEvent(final Event event)
 	{
 		System.out.println(event);

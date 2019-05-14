@@ -24,16 +24,17 @@
             </property>-->
     </bean>
 
-    <bean id="сombinedEventLogger" class="com.epam.spring.impl.CombinedEventLogger">
+    <bean id="сombinedEventLogger" class="com.epam.spring.impl.combin.CombinedEventLogger">
 
         <!--xml config:-->
-        <!-- <property name="loggers">
+        <property name="loggers">
              <list>
+                 <ref bean="consoleEventLogger"/>
                  <ref bean="consoleEventLogger"/>
                  <ref bean="fileEventLogger"/>
                  <ref bean="cacheFileEventLogger"/>
              </list>
-         </property>-->
+         </property>
     </bean>
 
 </beans>

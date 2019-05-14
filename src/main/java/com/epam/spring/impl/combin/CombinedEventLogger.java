@@ -1,6 +1,7 @@
-package com.epam.spring.impl;
+package com.epam.spring.impl.combin;
 
 import com.epam.spring.IEventLogger;
+import com.epam.spring.impl.Event;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CombinedEventLogger implements IEventLogger {
 
-    @Resource(name = "loggers")
+   /* @Resource(name = "loggers")*/
     private List<IEventLogger> loggers;
 
     @Override

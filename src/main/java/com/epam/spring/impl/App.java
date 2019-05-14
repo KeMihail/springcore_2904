@@ -7,6 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.epam.spring.IEventLogger;
+import com.epam.spring.impl.aspect.StatisticsAspect;
 
 
 @Component
@@ -22,6 +23,9 @@ public class App
 	//  @Resource(name = "loggers")
 	private Map<EventType, IEventLogger> loggers;
 
+	private static StatisticsAspect statistic;
+
+
 	public App()
 	{
 	}
@@ -34,24 +38,37 @@ public class App
 		this.loggers = loggers;
 	}
 
+	public App(final Client client, final IEventLogger eventLogger, final Event event,
+			final Map<EventType, IEventLogger> loggers, final StatisticsAspect statistic)
+	{
+		this.client = client;
+		this.eventLogger = eventLogger;
+		this.event = event;
+		this.loggers = loggers;
+		this.statistic = statistic;
+	}
+
 	public static void main(final String[] args)
 	{
 
+		/*annotation config:*/
+		//final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+
 		final ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
 
-		/*annotation config:*/
-		/*  final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);*/
 		final App app = context.getBean("app", App.class);
-
-		app.logEvent(app.getEvent());
+		app.loggEvent(app.getEvent());
 		context.close();
+
+		System.out.println(statistic.getStatistic());
+
 	}
 
 	// call to eventLogger
-	public void logEvent(final Event event)
+	public void loggEvent(final Event event)
 	{
 		event.setMessage(event.getMessage().replaceAll(client.getId(), client.getFullName()));
-		eventLogger = loggers.get(EventType.INFO);
+		eventLogger = loggers.get(EventType.ERROR);
 		eventLogger.logEvent(event);
 	}
 
@@ -93,5 +110,10 @@ public class App
 	public void setLoggers(Map<EventType, IEventLogger> loggers)
 	{
 		this.loggers = loggers;
+	}
+
+	public static void setStatistic(final StatisticsAspect statistic)
+	{
+		App.statistic = statistic;
 	}
 }

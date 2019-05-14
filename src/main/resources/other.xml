@@ -52,6 +52,7 @@
         <constructor-arg ref="client"/>
         <constructor-arg ref="event"/>
         <constructor-arg ref="loggers"/>
+        <constructor-arg ref="statisticsAspect"/>
 
         <!--<property name="eventLogger" value="#{ T(Event).isDay() ? fileEventLogger : consoleEventLogger }"/>
         <property name="client" value="#{client}"/>
@@ -59,6 +60,30 @@
         <property name="loggers" value="#{loggers}"/>-->
     </bean>
 
-    <bean id="loggingAspect" class="com.epam.spring.impl.aspect.LoggingAspect"/>
+   <!-- <bean id = "countConsole" class="java.lang.Integer"/>
+    <bean id = "countFile" class="java.lang.Integer"/>
+    <bean id = "countCashe" class="java.lang.Integer"/>-->
+
+    <!--<bean id="mapData" class="com.epam.spring.impl.util.MapData">
+       &lt;!&ndash; <property name="countConsole" >
+            <bean class="java.lang.Integer"/>
+        </property>
+        <property name="countConsole" >
+            <bean class="java.lang.Integer"/>
+        </property>
+        <property name="countConsole" >
+            <bean class="java.lang.Integer"/>
+        </property>&ndash;&gt;
+    </bean>-->
+
+  <!--  <util:map id="statisticMap">
+        <entry key="consoleLogger" value ="#{mapData.getCountConsole()}"/>
+        <entry key="fileLogger" value ="#{mapData.getCountFile()}"/>
+        <entry key="casheLogger" value ="#{mapData.getCountCashe()}"/>
+    </util:map>
+-->
+    <bean id="statisticsAspect" class="com.epam.spring.impl.aspect.StatisticsAspect">
+        <property name="otherLogger" ref="fileEventLogger" />
+    </bean>
 
 </beans>

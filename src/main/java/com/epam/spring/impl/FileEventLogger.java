@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.epam.spring.IEventLogger;
 
+
 @Component
 public class FileEventLogger implements IEventLogger
 {
@@ -19,19 +20,30 @@ public class FileEventLogger implements IEventLogger
 	private File file;
 
 	@PostConstruct
-	public void init(){
+	public void init()
+	{
 
 		this.file = new File(filename);
 		file.canWrite();
 	}
 
+	public String testMethod() throws Exception
+	{
+
+		throw new Exception();
+
+	}
+
+	@Override
 	public void logEvent(final Event event)
 	{
 
 		try
 		{
-			FileUtils.writeStringToFile(file, event.toString(),true);
-		}catch(IOException e){
+			FileUtils.writeStringToFile(file, event.toString(), true);
+		}
+		catch (IOException e)
+		{
 			System.out.println(e.getMessage());
 		}
 	}
